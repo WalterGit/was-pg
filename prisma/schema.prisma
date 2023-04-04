@@ -1,0 +1,87 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  password Password?
+  notes    Note[]
+}
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Note {
+  id    String @id @default(cuid())
+  title String
+  body  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+}
+
+model Product {
+  id                    BigInt  @id
+  codigo                String?
+  descricao             String?
+  tipo                  String?
+  situacao              String?
+  unidade               String?
+  preco                 String?
+  precoCusto            String?
+  descricaoCurta        String?
+  descricaoComplementar String?
+  dataInclusao          String?
+  dataAlteracao         String?
+  imageThumbnail        String?
+  urlVideo              String?
+  nomeFornecedor        String?
+  codigoFabricante      String?
+  marca                 String?
+  class_fiscal          String?
+  cest                  String?
+  origem                String?
+  idGrupoProduto        String?
+  linkExterno           String?
+  observacoes           String?
+  grupoProduto          String?
+  garantia              String?
+  descricaoFornecedor   String?
+  idFabricante          String?
+  pesoLiq               String?
+  pesoBruto             String?
+  estoqueMinimo         String?
+  estoqueMaximo         String?
+  gtin                  String?
+  gtinEmbalagem         String?
+  larguraProduto        String?
+  alturaProduto         String?
+  profundidadeProduto   String?
+  unidadeMedida         String?
+  itensPorCaixa         String?
+  volumes               String?
+  localizacao           String?
+  crossdocking          String?
+  condicao              String?
+  freteGratis           String?
+  producao              String?
+  dataValidade          String?
+  spedTipoItem          String?
+}
